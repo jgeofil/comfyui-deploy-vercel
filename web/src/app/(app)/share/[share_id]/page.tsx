@@ -22,7 +22,7 @@ import { auth, clerkClient } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
-export const maxDuration = 300; // 5 minutes
+export const maxDuration = 60; // 5 minutes
 
 export default async function Page({
 	params,
@@ -72,11 +72,17 @@ export default async function Page({
 							actions={[
 								{
 									title: "Workflow",
-									action: cloneWorkflow.bind(null, sharedDeployment.id),
+									action: cloneWorkflow.bind(
+										null,
+										sharedDeployment.id
+									),
 								},
 								{
 									title: "Machine",
-									action: cloneMachine.bind(null, sharedDeployment.id),
+									action: cloneMachine.bind(
+										null,
+										sharedDeployment.id
+									),
 								},
 							]}
 						/>
@@ -88,12 +94,15 @@ export default async function Page({
 
 				<CardContent>
 					<div>
-						{sharedDeployment?.description && sharedDeployment?.description}
+						{sharedDeployment?.description &&
+							sharedDeployment?.description}
 					</div>
 					<RunWorkflowInline
 						inputs={inputs}
 						machine_id={sharedDeployment.machine_id}
-						workflow_version_id={sharedDeployment.workflow_version_id}
+						workflow_version_id={
+							sharedDeployment.workflow_version_id
+						}
 					/>
 				</CardContent>
 			</Card>
@@ -103,7 +112,9 @@ export default async function Page({
 				</CardHeader>
 
 				<CardContent>
-					<PublicRunOutputs preview={sharedDeployment.showcase_media} />
+					<PublicRunOutputs
+						preview={sharedDeployment.showcase_media}
+					/>
 				</CardContent>
 			</Card>
 		</div>
